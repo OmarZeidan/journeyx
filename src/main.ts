@@ -1,6 +1,14 @@
-import '@/assets/global.css'
+import "@/assets/global.css"
 
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue"
+import App from "./App.vue"
 
-createApp(App).mount('#app')
+import { createConvexVue } from "@convex-vue/core"
+
+export const convexVue = createConvexVue({
+  convexUrl: import.meta.env.VITE_CONVEX_URL,
+})
+
+const app = createApp(App)
+app.use(convexVue)
+app.mount("#app")

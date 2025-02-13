@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseHero from "./components/BaseHero.vue"
+import DriversList from "./components/DriversList.vue"
 import IconLogo from "./components/icons/IconLogo.vue"
 </script>
 
@@ -18,7 +19,11 @@ import IconLogo from "./components/icons/IconLogo.vue"
 
   <BaseHero />
 
-  <footer class="bg-white shadow-sm dark:bg-gray-800">
+  <section class="flex gap-3 container mx-auto flex-col lg:flex-row">
+    <DriversList />
+  </section>
+
+  <footer class="bg-white shadow-sm dark:bg-gray-800 mt-50">
     <div class="w-full mx-auto max-w-screen-xl p-4">
       <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
         Made with 💜 by Omar Zeidan.
