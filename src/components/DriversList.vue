@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { useConvexMutation, useConvexQuery } from "@convex-vue/core";
-import ListCard from "./ListCard.vue";
 import { api } from "@cvx/_generated/api";
 import BaseAvatar from "./BaseAvatar.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseDialog from "./BaseDialog.vue";
+import ListCard from "./ListCard.vue";
 
 import { useDialog } from "@/composables/useDialog";
-import { reactive } from "vue";
 import type { Doc } from "@cvx/_generated/dataModel";
+import { reactive, ref } from "vue";
+import BaseDrawer from "./BaseDrawer.vue";
 import ListEmptyState from "./ListEmptyState.vue";
 
 const { openDialog, closeDialog, handleConfirm, isDialogOpen } = useDialog();
@@ -17,9 +18,16 @@ const { data, isLoading, error } = useConvexQuery(api.drivers.get, {});
 const { mutate: removeDriver } = useConvexMutation(api.drivers.deleteDriver);
 
 const selectedDriver = reactive<Doc<"drivers">>({} as Doc<"drivers">);
+
+const isDrawerOpen = ref(false);
 </script>
 
 <template>
+  <BaseDrawer v-model:isOpen="isDrawerOpen" position="right">
+    <template #drawer-title> Manage Driver</template>
+    <template #drawer-content> Content </template>
+  </BaseDrawer>
+
   <BaseDialog
     :isOpen="isDialogOpen"
     title="Deleting a driver"
@@ -51,7 +59,7 @@ const selectedDriver = reactive<Doc<"drivers">>({} as Doc<"drivers">);
             </p>
           </div>
           <div class="flex gap-1">
-            <BaseButton size="sm"> Edit </BaseButton>
+            <BaseButton size="sm" @click="isDrawerOpen = !isDrawerOpen"> Edit </BaseButton>
             <BaseButton
               size="sm"
               variant="danger"
