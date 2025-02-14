@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import InputSearch from "./InputSearch.vue";
+
 interface Props {
   title: string;
 }
+
+const model = defineModel<string>();
 
 defineProps<Props>();
 </script>
@@ -13,6 +17,7 @@ defineProps<Props>();
         <slot name="listCard-cta" />
       </div>
     </div>
+    <InputSearch v-model="model" />
     <slot />
   </div>
 </template>

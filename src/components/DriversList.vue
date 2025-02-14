@@ -7,7 +7,7 @@ import BaseDialog from "./BaseDialog.vue";
 import ListCard from "./ListCard.vue";
 import { useDialog } from "@/composables/useDialog";
 import type { Doc } from "@cvx/_generated/dataModel";
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import BaseDrawer from "./BaseDrawer.vue";
 import ListEmptyState from "./ListEmptyState.vue";
 import ManageDriverForm from "./DriverForm.vue";
@@ -37,6 +37,15 @@ const onDeleteButtonClick = (drivetToDelete: Doc<"drivers">) => {
   selectedDriver = drivetToDelete;
   openDialog();
 };
+
+const searchQuery = ref("");
+const filteredDrivers = computed(() => {
+  return data.value.filter((driver) => {
+    const matchesSearchQuery = driver.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+
+    return matchesSearchQuery;
+  });
+});
 </script>
 
 <template>
@@ -64,14 +73,14 @@ const onDeleteButtonClick = (drivetToDelete: Doc<"drivers">) => {
     "
   />
 
-  <ListCard title="Driver's List">
+  <ListCard title="Driver's List" v-model="searchQuery">
     <template #listCard-cta>
       <BaseButton variant="primary" @click="onAddNewButtonClick">+ Add New </BaseButton>
     </template>
     <p v-if="isLoading">Loading ...</p>
 
-    <ul v-else-if="data.length" role="list" class="divide-y divide-gray-200">
-      <li v-for="driver in data" :key="driver._id" class="py-3 sm:py-4">
+    <ul v-else-if="filteredDrivers.length" role="list" class="divide-y divide-gray-200">
+      <li v-for="driver in filteredDrivers" :key="driver._id" class="py-3 sm:py-4">
         <div class="flex items-center">
           <div class="shrink-0">
             <BaseAvatar :given-name="driver.name" />
@@ -95,7 +104,7 @@ const onDeleteButtonClick = (drivetToDelete: Doc<"drivers">) => {
     </ul>
 
     <h4 v-else-if="error" class="text-2xl text-center">Something went wrong!</h4>
-    <ListEmptyState v-else>
+    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="onToggleDrawer">
       <template #empty-state-description>
         Make sure to clear search terms or add a new driver.
       </template>
