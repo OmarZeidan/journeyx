@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import BaseButton from "./BaseButton.vue";
 
 interface Props {
@@ -27,6 +27,20 @@ const closeDrawer = () => {
   isOpen.value = false;
   emit("update:isOpen", false);
 };
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Escape" && props.isOpen) {
+    closeDrawer();
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeydown);
+});
 </script>
 
 <template>
