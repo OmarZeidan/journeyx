@@ -22,7 +22,8 @@ const buttonClasses = computed(() => {
     "px-4 py-2": props.size === "base",
     "px-6 py-3 text-lg": props.size === "lg",
     "text-xs px-2 py-2 bg-white hover:bg-gray-50": props.size === "icon",
-    "border-0 focus:outline-none rounded cursor-pointer text-base": true,
+    "border-0 focus:outline-none rounded cursor-pointer text-base disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500":
+      true,
   };
 });
 </script>

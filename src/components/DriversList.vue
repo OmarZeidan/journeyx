@@ -5,27 +5,50 @@ import BaseAvatar from "./BaseAvatar.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseDialog from "./BaseDialog.vue";
 import ListCard from "./ListCard.vue";
-
 import { useDialog } from "@/composables/useDialog";
 import type { Doc } from "@cvx/_generated/dataModel";
 import { reactive, ref } from "vue";
 import BaseDrawer from "./BaseDrawer.vue";
 import ListEmptyState from "./ListEmptyState.vue";
+import ManageDriverForm from "./DriverForm.vue";
 
 const { openDialog, closeDialog, handleConfirm, isDialogOpen } = useDialog();
 
 const { data, isLoading, error } = useConvexQuery(api.drivers.get, {});
 const { mutate: removeDriver } = useConvexMutation(api.drivers.deleteDriver);
 
-const selectedDriver = reactive<Doc<"drivers">>({} as Doc<"drivers">);
+let selectedDriver = reactive<Doc<"drivers">>({} as Doc<"drivers">);
 
 const isDrawerOpen = ref(false);
+
+const onToggleDrawer = () => {
+  isDrawerOpen.value = !isDrawerOpen.value;
+};
+
+const onAddNewButtonClick = () => {
+  selectedDriver = {} as Doc<"drivers">;
+  onToggleDrawer();
+};
+const onEditButtonClick = (driverToEdit: Doc<"drivers">) => {
+  selectedDriver = driverToEdit;
+  onToggleDrawer();
+};
+const onDeleteButtonClick = (drivetToDelete: Doc<"drivers">) => {
+  selectedDriver = drivetToDelete;
+  openDialog();
+};
 </script>
 
 <template>
   <BaseDrawer v-model:isOpen="isDrawerOpen" position="right">
     <template #drawer-title> Manage Driver</template>
-    <template #drawer-content> Content </template>
+    <template #drawer-content>
+      <ManageDriverForm
+        :driver="selectedDriver"
+        @close="onToggleDrawer"
+        :is-active="isDrawerOpen"
+      />
+    </template>
   </BaseDrawer>
 
   <BaseDialog
@@ -42,6 +65,9 @@ const isDrawerOpen = ref(false);
   />
 
   <ListCard title="Driver's List">
+    <template #listCard-cta>
+      <BaseButton variant="primary" @click="onAddNewButtonClick">+ Add New </BaseButton>
+    </template>
     <p v-if="isLoading">Loading ...</p>
 
     <ul v-else-if="data.length" role="list" class="divide-y divide-gray-200">
@@ -59,17 +85,8 @@ const isDrawerOpen = ref(false);
             </p>
           </div>
           <div class="flex gap-1">
-            <BaseButton size="sm" @click="isDrawerOpen = !isDrawerOpen"> Edit </BaseButton>
-            <BaseButton
-              size="sm"
-              variant="danger"
-              @click="
-                {
-                  selectedDriver = driver;
-                  openDialog();
-                }
-              "
-            >
+            <BaseButton size="sm" @click="onEditButtonClick(driver)"> Edit </BaseButton>
+            <BaseButton size="sm" variant="danger" @click="onDeleteButtonClick(driver)">
               Delete
             </BaseButton>
           </div>
