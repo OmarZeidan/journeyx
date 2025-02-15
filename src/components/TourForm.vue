@@ -34,7 +34,6 @@ const handleFormSubmit = async () => {
       emit("close");
     } catch (error) {
       console.error(`Error ${props.tour?._id ? "updating" : "adding"} tour:`, error);
-      alert("An error occurred. Please try again.");
     }
   }
 };

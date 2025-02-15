@@ -76,6 +76,7 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
   );
 
   const validateForm = () => {
+    if (errors.location_from) return;
     resetObject(errors);
 
     if (!form.name.trim()) {
@@ -97,7 +98,6 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
     if (!form.driver.trim()) {
       errors.driver = ERROR_DRIVER_REQUIRED;
     }
-
     return Object.values(errors).every((error) => !error);
   };
 
