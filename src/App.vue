@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import BaseHero from "./components/BaseHero.vue"
-import DriversList from "./components/DriversList.vue"
-import IconLogo from "./components/icons/IconLogo.vue"
+import BaseHero from "./components/BaseHero.vue";
+import DriversList from "./components/DriversList.vue";
+import IconLogo from "./components/icons/IconLogo.vue";
+import ToursList from "./components/ToursList.vue";
 </script>
 
 <template>
@@ -21,6 +22,7 @@ import IconLogo from "./components/icons/IconLogo.vue"
 
   <section class="flex gap-3 container mx-auto flex-col lg:flex-row">
     <DriversList />
+    <ToursList />
   </section>
 
   <footer class="bg-white shadow-sm dark:bg-gray-800 mt-50">

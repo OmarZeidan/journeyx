@@ -11,6 +11,8 @@ export function useDriverMutation() {
     api.drivers.updateDriver,
   );
 
+  const { mutate: removeDriver } = useConvexMutation(api.drivers.deleteDriver);
+
   const submitManageDriver = async (
     form: { name: string; location: string },
     driver?: Doc<"drivers">,
@@ -30,5 +32,6 @@ export function useDriverMutation() {
     submitManageDriver,
     isAddDriverLoading,
     isUpdateDriverLoading,
+    removeDriver,
   };
 }

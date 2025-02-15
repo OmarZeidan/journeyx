@@ -2,11 +2,16 @@
 import FormInput from "./Form/FormInput.vue";
 import FormLabel from "./Form/FormLabel.vue";
 
+interface Props {
+  fieldId?: string;
+}
+defineProps<Props>();
+
 const model = defineModel<string>();
 </script>
 
 <template>
-  <FormLabel html-for="search-drivers" text="Search" class="sr-only" />
+  <FormLabel :html-for="fieldId" text="Search" class="sr-only" />
 
   <div class="relative">
     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -27,12 +32,6 @@ const model = defineModel<string>();
       </svg>
     </div>
 
-    <FormInput
-      v-model="model"
-      type="search"
-      id="search-drivers"
-      placeholder="Search Drivers"
-      class="ps-10 p-4"
-    />
+    <FormInput v-model="model" type="search" :id="fieldId" placeholder="Search" class="ps-10 p-4" />
   </div>
 </template>

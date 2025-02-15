@@ -3,7 +3,7 @@ import { useDriverForm } from "@/composables/useDriverForm";
 import { useDriverMutation } from "@/composables/useDriverMutation";
 import { useUtils } from "@/composables/useUtils";
 import type { Doc } from "@cvx/_generated/dataModel";
-import { computed, watch } from "vue";
+import { computed, onBeforeUnmount, watch } from "vue";
 import BaseButton from "./BaseButton.vue";
 import FormInput from "./Form/FormInput.vue";
 import FormLabel from "./Form/FormLabel.vue";
@@ -53,17 +53,13 @@ watch(
   { immediate: true },
 );
 
-watch(
-  () => props.isActive,
-  (newValue) => {
-    if (!newValue && !props.driver?._id) {
-      resetObject(form);
-    } else {
-      resetObject(errors);
-    }
-  },
-  { immediate: true },
-);
+onBeforeUnmount(() => {
+  if (!props.driver?._id) {
+    resetObject(form);
+  } else {
+    resetObject(errors);
+  }
+});
 </script>
 
 <template>

@@ -14,6 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as drivers from "../drivers.js";
+import type * as tours from "../tours.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -25,6 +26,7 @@ import type * as drivers from "../drivers.js";
  */
 declare const fullApi: ApiFromModules<{
   drivers: typeof drivers;
+  tours: typeof tours;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
