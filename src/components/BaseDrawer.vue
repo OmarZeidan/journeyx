@@ -45,7 +45,12 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <div v-if="isOpen" class="fixed inset-0 bg-black opacity-75 z-40" @click="closeDrawer"></div>
+    <div
+      v-if="isOpen"
+      class="fixed inset-0 bg-black opacity-75 z-40"
+      @click="closeDrawer"
+      data-test="drawer-overlay"
+    ></div>
 
     <div
       :class="[
@@ -61,6 +66,7 @@ onUnmounted(() => {
         @click="closeDrawer"
         variant="secondary"
         size="icon"
+        data-test="button-close-drawer"
       >
         <svg
           class="w-3 h-3"
