@@ -87,9 +87,11 @@ onUnmounted(() => {
       </BaseButton>
 
       <div class="p-6">
-        <h2 class="text-xl font-bold mb-1"><slot name="drawer-title">Drawer Title</slot></h2>
+        <h2 class="text-xl font-bold mb-1" data-test="drawer-title">
+          <slot name="drawer-title">Drawer Title</slot>
+        </h2>
 
-        <div class="mt-4">
+        <div class="mt-4" data-test="drawer-content">
           <slot name="drawer-content"></slot>
         </div>
       </div>

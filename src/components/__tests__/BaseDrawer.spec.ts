@@ -60,8 +60,10 @@ describe("BaseDrawer", () => {
       },
     });
 
-    expect(wrapper.text()).toContain("Hello Title");
-    expect(wrapper.html()).toContain("<div> Placeholder custom content </div>");
+    expect(wrapper.find("[data-test='drawer-title']").text()).toContain("Hello Title");
+    expect(wrapper.find("[data-test='drawer-content']").html()).toContain(
+      "<div> Placeholder custom content </div>",
+    );
   });
 
   it("removes event listener on unmount", () => {
