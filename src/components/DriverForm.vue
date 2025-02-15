@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
       />
     </div>
 
-    <div>
+    <div data-test="location-input">
       <FormLabel html-for="location" text="Location" />
       <FormInput
         id="location"
