@@ -10,7 +10,7 @@ export const get = query({
 
 export const createNew = mutation({
   args: {
-    name: v.string(),
+    customerName: v.string(),
     date: v.string(),
     location_from: v.string(),
     location_to: v.string(),
@@ -27,7 +27,7 @@ export const createNew = mutation({
 export const updateTour = mutation({
   args: {
     id: v.id("tours"),
-    name: v.string(),
+    customerName: v.string(),
     date: v.string(),
     location_from: v.string(),
     location_to: v.string(),

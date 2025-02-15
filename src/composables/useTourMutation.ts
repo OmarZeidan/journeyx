@@ -13,7 +13,7 @@ export function useTourMutation() {
 
   const onAddNewTour = async (tour: Omit<Doc<"tours">, "_id" | "_creationTime">) => {
     await addNewTour({
-      name: tour.name,
+      customerName: tour.customerName,
       location_from: tour.location_from,
       location_to: tour.location_to,
       date: tour.date,

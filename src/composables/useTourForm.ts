@@ -17,7 +17,7 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
   const ERROR_LOCATION_TO_REQUIRED = REQUIRED_ERROR_TEMPLATE.replace("{field}", "Location To");
 
   const form = reactive({
-    name: "",
+    customerName: "",
     location_from: "",
     location_to: "",
     date: "",
@@ -25,7 +25,7 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
   });
 
   const errors = reactive({
-    name: "",
+    customerName: "",
     location_from: "",
     location_to: "",
     date: "",
@@ -79,8 +79,8 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
     if (errors.location_from) return;
     resetObject(errors);
 
-    if (!form.name.trim()) {
-      errors.name = ERROR_NAME_REQUIRED;
+    if (!form.customerName.trim()) {
+      errors.customerName = ERROR_NAME_REQUIRED;
     }
 
     if (!form.location_from.trim()) {

@@ -46,7 +46,7 @@ const submitButtonText = computed(() => {
 watch(
   () => props.tour,
   (newTour) => {
-    form.name = newTour?.name || "";
+    form.customerName = newTour?.customerName || "";
     form.location_from = newTour?.location_from || "";
     form.location_to = newTour?.location_to || "";
     form.date = newTour?.date || "";
@@ -79,13 +79,13 @@ onBeforeUnmount(() => {
 <template>
   <form @submit.prevent="handleFormSubmit" name="manageTourForm" class="max-w-sm mx-auto space-y-4">
     <div>
-      <FormLabel html-for="customerName" text="Tour Name" />
+      <FormLabel html-for="customerName" text="Customer Name" />
       <FormInput
         type="name"
         id="customerName"
-        v-model="form.name"
+        v-model="form.customerName"
         placeholder="My Awesome Company"
-        :error="errors.name"
+        :error="errors.customerName"
       />
     </div>
 

@@ -44,7 +44,9 @@ const onDeleteButtonClick = (tourToDelete: Doc<"tours">) => {
 const searchQuery = ref("");
 const filteredTours = computed(() => {
   return data.value.filter((tour) => {
-    const matchesSearchQuery = tour.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesSearchQuery = tour.customerName
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase());
 
     return matchesSearchQuery;
   });
@@ -90,11 +92,11 @@ const filteredTours = computed(() => {
       <li v-for="tour in filteredTours" :key="tour._id" class="py-3 sm:py-4">
         <div class="flex items-center">
           <div class="shrink-0">
-            <BaseAvatar :given-name="tour.name" />
+            <BaseAvatar :given-name="tour.customerName" />
           </div>
           <div class="flex-1 min-w-0 ms-4">
             <p class="text-sm font-medium text-gray-900 truncate">
-              {{ tour.name }}
+              {{ tour.customerName }}
             </p>
             <p class="text-sm text-gray-500 truncate 0">
               {{ tour.location_from }}
