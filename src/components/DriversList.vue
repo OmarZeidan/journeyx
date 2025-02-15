@@ -8,7 +8,7 @@ import BaseAvatar from "./BaseAvatar.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseDialog from "./BaseDialog.vue";
 import BaseDrawer from "./BaseDrawer.vue";
-import ManageDriverForm from "./DriverForm.vue";
+import DriverForm from "./DriverForm.vue";
 import InputSearch from "./InputSearch.vue";
 import ListCard from "./ListCard.vue";
 import ListEmptyState from "./ListEmptyState.vue";
@@ -55,7 +55,7 @@ const filteredDrivers = computed(() => {
   <BaseDrawer v-model:isOpen="isDrawerOpen" position="right">
     <template #drawer-title> Manage Driver</template>
     <template #drawer-content>
-      <ManageDriverForm
+      <DriverForm
         v-if="isDrawerOpen"
         :driver="selectedDriver"
         @close="onToggleDrawer"

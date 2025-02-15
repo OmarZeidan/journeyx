@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useDialog } from "@/composables/useDialog";
+import { useDriver } from "@/composables/useDriver";
 import { useConvexMutation, useConvexQuery } from "@convex-vue/core";
 import { api } from "@cvx/_generated/api";
 import type { Doc } from "@cvx/_generated/dataModel";
@@ -8,17 +9,16 @@ import BaseAvatar from "./BaseAvatar.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseDialog from "./BaseDialog.vue";
 import BaseDrawer from "./BaseDrawer.vue";
+import InputSearch from "./InputSearch.vue";
 import ListCard from "./ListCard.vue";
 import ListEmptyState from "./ListEmptyState.vue";
 import TourForm from "./TourForm.vue";
-import { useDriver } from "@/composables/useDriver";
-import InputSearch from "./InputSearch.vue";
 
 const { openDialog, closeDialog, handleConfirm, isDialogOpen } = useDialog();
 
 const { data, isLoading, error } = useConvexQuery(api.tours.get, {});
 const { mutate: removeTour } = useConvexMutation(api.tours.deleteTour);
-const { drivers, isDriversLoading, driversFetchError } = useDriver();
+const { drivers } = useDriver();
 
 let selectedTour = reactive<Doc<"tours">>({} as Doc<"tours">);
 
