@@ -2,18 +2,22 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import ListCard from "@/components/ListCard.vue";
 
+const _testTitle = "List Card XO";
 describe("ListCard", () => {
   it("renders correctly with the right title", () => {
     const wrapper = mount(ListCard, {
       props: {
-        title: "Hello ListCard",
+        title: _testTitle,
       },
     });
     expect(wrapper).toBeTruthy();
-    expect(wrapper.find("[data-test='listCard-title']").text()).toBe("Hello ListCard");
+    expect(wrapper.find("[data-test='listCard-title']").text()).toBe(_testTitle);
   });
   it("renders slot content", () => {
     const wrapper = mount(ListCard, {
+      props: {
+        title: _testTitle,
+      },
       slots: {
         "listCard-cta": "<button>CTA</button>",
         "search-input": "Search input goes here",
