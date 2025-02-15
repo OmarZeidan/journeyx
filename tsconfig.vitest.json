@@ -8,7 +8,8 @@
     "lib": [],
     "types": ["node", "jsdom"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@cvx/*": ["./convex/*"]
     }
   }
 }
