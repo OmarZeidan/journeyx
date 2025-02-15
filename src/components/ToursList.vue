@@ -55,7 +55,12 @@ const filteredTours = computed(() => {
   <BaseDrawer v-model:isOpen="isDrawerOpen" position="right">
     <template #drawer-title> Manage Tour </template>
     <template #drawer-content>
-      <TourForm v-if="isDrawerOpen" :drivers="drivers" :tour="selectedTour" />
+      <TourForm
+        v-if="isDrawerOpen"
+        :drivers="drivers"
+        :tour="selectedTour"
+        @close="onToggleDrawer"
+      />
     </template>
   </BaseDrawer>
 
