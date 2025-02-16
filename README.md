@@ -64,6 +64,7 @@ You can deploy simply by pushing to the `main` branch.
 - [ ] Add Authentication with [Clerk](https://clerk.com/docs/quickstarts/vue).
 - [ ] Some cleanup if necessary for `<TourForm />`, things like validation and think of more composables.
 - [ ] For more fun, add [commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#getting-started).
+- [ ] Debounce on Search? (It would be more valuable if we are calling APIs tho)
 
 ## Q&A
 
