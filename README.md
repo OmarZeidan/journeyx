@@ -50,10 +50,20 @@ pnpm lint
 
 ## Deployment
 
-You can simply deploy but pushing to the `main` branch.
+You can deploy simply by pushing to the `main` branch.
 
 > [!WARNING]  
 > Tests should pass in order to be able to commit or build.
+
+## Roadmap
+
+- [x] Running and working app with base++ requirements.
+- [ ] Add a toast message to relfect CRUD operations.
+- [ ] Add more tests.
+- [ ] Add Sentry.
+- [ ] Add Authentication with [Clerk](https://clerk.com/docs/quickstarts/vue).
+- [ ] Some cleanup if necessary for `<TourForm />`, things like validation and think of more composables.
+- [ ] For more fun, add [commitlint](https://github.com/conventional-changelog/commitlint?tab=readme-ov-file#getting-started).
 
 ## Q&A
 
