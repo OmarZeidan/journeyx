@@ -76,7 +76,7 @@ const filteredDrivers = computed(() => {
     <template #listCard-cta>
       <BaseButton variant="primary" @click="onAddNewButtonClick">+ Add New </BaseButton>
     </template>
-    <template #search-input>
+    <template #search-input v-if="drivers?.length">
       <InputSearch v-model="searchQuery" />
     </template>
 
@@ -125,10 +125,11 @@ const filteredDrivers = computed(() => {
     </ul>
 
     <h4 v-else-if="driversFetchError" class="text-2xl text-center">Something went wrong!</h4>
-    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="toggleDrawer">
+    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="onAddNewButtonClick">
       <template #empty-state-description>
         Make sure to clear search terms or add a new driver.
       </template>
+      <template #clearSearchButton v-if="!!searchQuery" />
     </ListEmptyState>
   </ListCard>
 </template>

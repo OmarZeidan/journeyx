@@ -73,7 +73,7 @@ const filteredTours = computed(() => {
     <template #listCard-cta>
       <BaseButton variant="primary" @click="onAddNewButtonClick">+ Add New </BaseButton>
     </template>
-    <template #search-input>
+    <template #search-input v-if="data?.length">
       <InputSearch fieldId="search-tours" v-model="searchQuery" />
     </template>
 
@@ -122,10 +122,11 @@ const filteredTours = computed(() => {
     </ul>
 
     <h4 v-else-if="error" class="text-2xl text-center">Something went wrong!</h4>
-    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="toggleDrawer">
+    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="onAddNewButtonClick">
       <template #empty-state-description>
         Make sure to clear search terms or add a new tour.
       </template>
+      <template #clearSearchButton v-if="!!searchQuery" />
     </ListEmptyState>
   </ListCard>
 </template>

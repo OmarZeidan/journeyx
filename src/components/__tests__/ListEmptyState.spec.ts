@@ -11,7 +11,11 @@ describe("ListEmptyState", () => {
   });
 
   it('emits "onClearSearch" event when the clear button is clicked', () => {
-    const wrapper = mount(ListEmptyState, {});
+    const wrapper = mount(ListEmptyState, {
+      slots: {
+        clearSearchButton: "",
+      },
+    });
 
     wrapper.findAllComponents(BaseButton)[0].trigger("click");
     expect(wrapper.emitted("onClearSearch")).toBeTruthy();

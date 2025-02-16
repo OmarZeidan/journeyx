@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BaseButton from "./BaseButton.vue";
-
 const emit = defineEmits(["onAdd", "onClearSearch"]);
 </script>
 <template>
@@ -12,9 +11,11 @@ const emit = defineEmits(["onAdd", "onClearSearch"]);
       <slot name="empty-state-description" />
     </p>
     <div class="flex gap-3">
-      <BaseButton class="w-full" variant="secondary" @click="emit('onClearSearch')">
-        Clear Search
-      </BaseButton>
+      <slot name="clearSearchButton" v-if="$slots.clearSearchButton">
+        <BaseButton class="w-full" variant="secondary" @click="emit('onClearSearch')">
+          Clear Search
+        </BaseButton>
+      </slot>
       <BaseButton class="w-full" @click="emit('onAdd')"> Add New </BaseButton>
     </div>
   </div>
