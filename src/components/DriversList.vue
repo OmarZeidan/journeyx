@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useDialog } from "@/composables/useDialog";
 import { useDriver } from "@/composables/useDriver";
 import { useDriverMutation } from "@/composables/useDriverMutation";
 import type { Doc } from "@cvx/_generated/dataModel";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import BaseAvatar from "./BaseAvatar.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseDialog from "./BaseDialog.vue";
@@ -12,33 +11,28 @@ import DriverForm from "./DriverForm.vue";
 import InputSearch from "./InputSearch.vue";
 import ListCard from "./ListCard.vue";
 import ListEmptyState from "./ListEmptyState.vue";
-
-const { openDialog, closeDialog, handleConfirm, isDialogOpen } = useDialog();
+import { useToggle } from "@/composables/useToggle";
 
 const { drivers, isDriversLoading, driversFetchError } = useDriver();
 const { removeDriver } = useDriverMutation();
+const selectedDriver = ref<Doc<"drivers">>({} as Doc<"drivers">);
 
-let selectedDriver = reactive<Doc<"drivers">>({} as Doc<"drivers">);
-
-const isDrawerOpen = ref(false);
-
-const onToggleDrawer = () => {
-  isDrawerOpen.value = !isDrawerOpen.value;
-};
+const { isOpen: isDrawerOpen, toggle: toggleDrawer } = useToggle();
+const { isOpen: isDialogOpen, toggle: toggleDialog } = useToggle();
 
 const onAddNewButtonClick = () => {
-  selectedDriver = {} as Doc<"drivers">;
-  onToggleDrawer();
+  selectedDriver.value = {} as Doc<"drivers">;
+  toggleDrawer();
 };
 
 const onEditButtonClick = (driverToEdit: Doc<"drivers">) => {
-  selectedDriver = driverToEdit;
-  onToggleDrawer();
+  selectedDriver.value = driverToEdit;
+  toggleDrawer();
 };
 
 const onDeleteButtonClick = (drivetToDelete: Doc<"drivers">) => {
-  selectedDriver = drivetToDelete;
-  openDialog();
+  selectedDriver.value = drivetToDelete;
+  toggleDialog();
 };
 
 const searchQuery = ref("");
@@ -58,7 +52,7 @@ const filteredDrivers = computed(() => {
       <DriverForm
         v-if="isDrawerOpen"
         :driver="selectedDriver"
-        @close="onToggleDrawer"
+        @close="toggleDrawer"
         :is-active="isDrawerOpen"
       />
     </template>
@@ -69,11 +63,11 @@ const filteredDrivers = computed(() => {
     :isOpen="isDialogOpen"
     title="Deleting a driver"
     description="Are you sure?"
-    @close="closeDialog"
+    @close="toggleDialog"
     @confirm="
       {
         removeDriver({ id: selectedDriver._id });
-        handleConfirm();
+        toggleDialog();
       }
     "
   />
@@ -131,7 +125,7 @@ const filteredDrivers = computed(() => {
     </ul>
 
     <h4 v-else-if="driversFetchError" class="text-2xl text-center">Something went wrong!</h4>
-    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="onToggleDrawer">
+    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="toggleDrawer">
       <template #empty-state-description>
         Make sure to clear search terms or add a new driver.
       </template>

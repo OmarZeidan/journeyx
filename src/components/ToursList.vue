@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useDialog } from "@/composables/useDialog";
 import { useDriver } from "@/composables/useDriver";
+import { useToggle } from "@/composables/useToggle";
 import { useConvexMutation, useConvexQuery } from "@convex-vue/core";
 import { api } from "@cvx/_generated/api";
 import type { Doc } from "@cvx/_generated/dataModel";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import BaseAvatar from "./BaseAvatar.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseDialog from "./BaseDialog.vue";
@@ -14,31 +14,26 @@ import ListCard from "./ListCard.vue";
 import ListEmptyState from "./ListEmptyState.vue";
 import TourForm from "./TourForm.vue";
 
-const { openDialog, closeDialog, handleConfirm, isDialogOpen } = useDialog();
-
 const { data, isLoading, error } = useConvexQuery(api.tours.get, {});
 const { mutate: removeTour } = useConvexMutation(api.tours.deleteTour);
 const { drivers } = useDriver();
 
-let selectedTour = reactive<Doc<"tours">>({} as Doc<"tours">);
+const { isOpen: isDrawerOpen, toggle: toggleDrawer } = useToggle();
+const { isOpen: isDialogOpen, toggle: toggleDialog } = useToggle();
 
-const isDrawerOpen = ref(false);
-
-const onToggleDrawer = () => {
-  isDrawerOpen.value = !isDrawerOpen.value;
-};
+const selectedTour = ref<Doc<"tours">>({} as Doc<"tours">);
 
 const onAddNewButtonClick = () => {
-  selectedTour = {} as Doc<"tours">;
-  onToggleDrawer();
+  selectedTour.value = {} as Doc<"tours">;
+  toggleDrawer();
 };
 const onEditButtonClick = (tourToEdit: Doc<"tours">) => {
-  selectedTour = tourToEdit;
-  onToggleDrawer();
+  selectedTour.value = tourToEdit;
+  toggleDrawer();
 };
 const onDeleteButtonClick = (tourToDelete: Doc<"tours">) => {
-  selectedTour = tourToDelete;
-  openDialog();
+  selectedTour.value = tourToDelete;
+  toggleDialog();
 };
 
 const searchQuery = ref("");
@@ -57,12 +52,7 @@ const filteredTours = computed(() => {
   <BaseDrawer v-model:isOpen="isDrawerOpen" position="right">
     <template #drawer-title> Manage Tour </template>
     <template #drawer-content>
-      <TourForm
-        v-if="isDrawerOpen"
-        :drivers="drivers"
-        :tour="selectedTour"
-        @close="onToggleDrawer"
-      />
+      <TourForm v-if="isDrawerOpen" :drivers="drivers" :tour="selectedTour" @close="toggleDrawer" />
     </template>
   </BaseDrawer>
 
@@ -70,11 +60,11 @@ const filteredTours = computed(() => {
     :isOpen="isDialogOpen"
     title="Deleting a tour"
     description="Are you sure?"
-    @close="closeDialog"
+    @close="toggleDialog"
     @confirm="
       {
         removeTour({ id: selectedTour._id });
-        handleConfirm();
+        toggleDialog();
       }
     "
   />
@@ -132,7 +122,7 @@ const filteredTours = computed(() => {
     </ul>
 
     <h4 v-else-if="error" class="text-2xl text-center">Something went wrong!</h4>
-    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="onToggleDrawer">
+    <ListEmptyState v-else @on-clear-search="searchQuery = ''" @on-add="toggleDrawer">
       <template #empty-state-description>
         Make sure to clear search terms or add a new tour.
       </template>

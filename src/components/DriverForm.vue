@@ -10,12 +10,6 @@ import FormLabel from "./Form/FormLabel.vue";
 
 interface Props {
   driver?: Doc<"drivers">;
-  /**
-   * tells if the form is active
-   * if false => clean the form and the errors object
-   * @default false
-   */
-  isActive?: boolean;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(["close"]);

@@ -12,12 +12,6 @@ import { CITIES } from "@/constants";
 interface Props {
   tour?: Doc<"tours">;
   drivers: Array<Doc<"drivers">>;
-  /**
-   * tells if the form is active
-   * if false => clean the form and the errors object
-   * @default false
-   */
-  isActive?: boolean;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(["close"]);
@@ -51,18 +45,6 @@ watch(
     form.location_to = newTour?.location_to || "";
     form.date = newTour?.date || "";
     form.driver = newTour?.driver || "";
-  },
-  { immediate: true },
-);
-
-watch(
-  () => props.isActive,
-  (newValue) => {
-    if (!newValue && !props.tour?._id) {
-      resetObject(form);
-    } else {
-      resetObject(errors);
-    }
   },
   { immediate: true },
 );
