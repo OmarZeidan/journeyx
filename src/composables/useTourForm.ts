@@ -51,12 +51,12 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
         }
       }
 
-      if (/\d/.test(newLocationFrom.trim())) {
+      if (/\d/.test(newLocationFrom?.trim())) {
         setError("location_from", ERROR_LOCATION_NUMBERS);
         return;
       }
 
-      if (/\d/.test(newLocationTo.trim())) {
+      if (/\d/.test(newLocationTo?.trim())) {
         setError("location_to", ERROR_LOCATION_NUMBERS);
         return;
       }
