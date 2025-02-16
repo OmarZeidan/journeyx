@@ -33,30 +33,33 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
   });
 
   const driver = computed(() => drivers.filter((driver) => driver._id === form.driver));
+  const setError = (field: keyof typeof errors, message: string) => {
+    errors[field] = message;
+  };
 
   watch(
     () => [form.location_from, form.location_to],
     ([newLocationFrom, newLocationTo]) => {
+      setError("location_from", "");
+      setError("location_to", "");
+      setError("driver", "");
+
       if (driver.value.length > 0) {
         if (driver.value[0].location !== form.location_from) {
-          errors.location_from = ERROR_LOCATION_MISMATCH;
+          setError("location_from", ERROR_LOCATION_MISMATCH);
           return;
         }
       }
 
       if (/\d/.test(newLocationFrom.trim())) {
-        errors.location_from = ERROR_LOCATION_NUMBERS;
+        setError("location_from", ERROR_LOCATION_NUMBERS);
         return;
       }
 
       if (/\d/.test(newLocationTo.trim())) {
-        errors.location_to = ERROR_LOCATION_NUMBERS;
+        setError("location_to", ERROR_LOCATION_NUMBERS);
         return;
       }
-
-      errors.location_from = "";
-      errors.location_to = "";
-      errors.driver = "";
     },
   );
 
@@ -68,9 +71,9 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
         driver.value?.[0]?.location &&
         driver.value?.[0]?.location !== form.location_from
       ) {
-        errors.location_from = ERROR_LOCATION_MISMATCH;
+        setError("location_from", ERROR_LOCATION_MISMATCH);
       } else {
-        errors.location_from = "";
+        setError("location_from", "");
       }
     },
   );
@@ -80,23 +83,23 @@ export function useTourForm(drivers: Array<Doc<"drivers">>) {
     resetObject(errors);
 
     if (!form.customerName.trim()) {
-      errors.customerName = ERROR_NAME_REQUIRED;
+      setError("customerName", ERROR_NAME_REQUIRED);
     }
 
     if (!form.location_from.trim()) {
-      errors.location_from = ERROR_LOCATION_FROM_REQUIRED;
+      setError("location_from", ERROR_LOCATION_FROM_REQUIRED);
     }
 
     if (!form.location_to.trim()) {
-      errors.location_to = ERROR_LOCATION_TO_REQUIRED;
+      setError("location_to", ERROR_LOCATION_TO_REQUIRED);
     }
 
     if (!form.date.trim()) {
-      errors.date = ERROR_REQUIRED_DATE;
+      setError("date", ERROR_REQUIRED_DATE);
     }
 
     if (!form.driver.trim()) {
-      errors.driver = ERROR_DRIVER_REQUIRED;
+      setError("driver", ERROR_DRIVER_REQUIRED);
     }
     return Object.values(errors).every((error) => !error);
   };

@@ -20,6 +20,14 @@ const { form, errors, validateForm } = useTourForm(props.drivers);
 const { onAddNewTour, onUpdateTour, isAddTourLoading, isUpdateTourLoading } = useTourMutation();
 const { resetObject } = useUtils();
 
+const initFormWithTour = () => {
+  form.customerName = props.tour?.customerName || "";
+  form.location_from = props.tour?.location_from || "";
+  form.location_to = props.tour?.location_to || "";
+  form.date = props.tour?.date || "";
+  form.driver = props.tour?.driver || "";
+};
+
 const handleFormSubmit = async () => {
   if (validateForm()) {
     try {
@@ -39,22 +47,14 @@ const submitButtonText = computed(() => {
 
 watch(
   () => props.tour,
-  (newTour) => {
-    form.customerName = newTour?.customerName || "";
-    form.location_from = newTour?.location_from || "";
-    form.location_to = newTour?.location_to || "";
-    form.date = newTour?.date || "";
-    form.driver = newTour?.driver || "";
+  () => {
+    initFormWithTour();
   },
   { immediate: true },
 );
 
 onBeforeUnmount(() => {
-  if (!props.tour?._id) {
-    resetObject(form);
-  } else {
-    resetObject(errors);
-  }
+  return props.tour?._id ? resetObject(errors) : resetObject(form);
 });
 </script>
 

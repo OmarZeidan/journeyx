@@ -20,7 +20,7 @@ import ToursList from "./components/ToursList.vue";
 
   <BaseHero />
 
-  <section class="flex gap-3 container mx-auto flex-col lg:flex-row">
+  <section class="flex gap-3 container mx-auto flex-col lg:flex-row" id="lists-section">
     <DriversList />
     <ToursList />
   </section>

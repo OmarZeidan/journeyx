@@ -75,3 +75,7 @@ Pinia is a powerful option, but it might be overkill for a small app. For simple
 2. Why using an Input for Driver's location, and a dropdown list for Tour?
 
 I used an input field for the Driver's location to easily validate that no numbers are entered, which isn't possible on a predefined dropdown.
+
+3. Why not using a custom library like [VUELIDATE](https://vuelidate-next.netlify.app/) for form validation?
+
+Its just a simple form, adding libraries might feel overkill. And this goes to other ideas like using a component library or so.

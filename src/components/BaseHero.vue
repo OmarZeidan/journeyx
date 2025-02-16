@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import BaseButton from "./BaseButton.vue"
+import BaseButton from "./BaseButton.vue";
+
+// Move it to composable if will be reused.
+const handleScroll = () => {
+  const target = document.querySelector("#lists-section");
+  target?.scrollIntoView({ behavior: "smooth" });
+};
 </script>
 <template>
   <section class="text-gray-600">
@@ -15,8 +21,7 @@ import BaseButton from "./BaseButton.vue"
           Simplify your workflow and keep everything in sync!🚀
         </p>
         <div class="flex justify-center gap-3">
-          <BaseButton> New Tour </BaseButton>
-          <BaseButton variant="secondary"> New Driver </BaseButton>
+          <BaseButton variant="secondary" @click="handleScroll"> Start Now </BaseButton>
         </div>
       </div>
       <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
