@@ -79,3 +79,7 @@ I used an input field for the Driver's location to easily validate that no numbe
 3. Why not using a custom library like [VUELIDATE](https://vuelidate-next.netlify.app/) for form validation?
 
 Its just a simple form, adding libraries might feel overkill. And this goes to other ideas like using a component library or so.
+
+## The Basic App
+
+![Screenshot of the basic App's sketch](./src/assets/sketch.png)
